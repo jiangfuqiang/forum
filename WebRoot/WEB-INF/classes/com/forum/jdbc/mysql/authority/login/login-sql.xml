@@ -1,0 +1,3 @@
+<sqls>
+	<sql name="select_password">SELECT password FROM PdcUser WHERE id = ?</sql>
+</sqls>
