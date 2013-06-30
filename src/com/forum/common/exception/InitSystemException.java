@@ -6,6 +6,11 @@ public class InitSystemException extends Exception {
 	
 	private static Logger log = Logger.getLogger(InitSystemException.class);
 	
+	public InitSystemException() {
+		log.info("初始化系统出现未知异常，服务器即将停止启动>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.exit(0);
+	}
+	
 	public InitSystemException(String msg) {
 		log.info("初始化系统异常【"+msg+"】，服务器即将停止启动>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		System.exit(0);

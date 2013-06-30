@@ -11,4 +11,6 @@ package com.forum.common;
  */
 public class SystemConstant {
 	public static final String SYSTEM_CONFIG_FILE_PATH = "/com/forum/common/systemconfig.properties";
+	public static final String PRIVATE_KEY = "prikey";  //私钥名称
+	public static final String PUBLIC_KEY = "pubkey";   //公钥名称
 }
