@@ -16,6 +16,8 @@
 	<style type="text/css">
 		body{
 			background:url(images/common/bg.png);
+			height:97%;
+			width:99%;
 		}
 		#login_img{
 			cursor: pointer;
@@ -41,9 +43,34 @@
 				var src = $(this).attr("src");
 				$("#loginloading_img").show();
 				var username = $("#username").val();
-				
+				if(!username) {
+					$.showmsg({'msg':'用户名不能为空'});
+					$("#loginloading_img").hide();
+					return;
+				}
+				if($.validate({type:'chinese',value:username})) {
+					$.showmsg({'title':'错误提示', 'msg':'用户名不能为汉字'});
+					$("#loginloading_img").hide();
+					return;
+				}
 				var password = $("#password").val();
-				
+				if(!password) {
+					$.showmsg({'msg':'密码不能为空'});
+					$("#loginloading_img").hide();
+					return;
+				}
+				$.ajax({
+					url: basePath + 'login/login.action',
+					dataType: 'json',
+					data: {username:username, password:password},
+					success: function(json) {
+						alert(json.msg);
+					},
+					error: function(){
+						$.showmsg({'msg':'登陆失败，请检查用户名或者密码输入是否正确'});
+						$("#loginloading_img").hide();
+					}
+				});
 				//$("#loginloading_img").hide();
 			});
 		});

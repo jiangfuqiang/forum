@@ -27,6 +27,7 @@ public class BaseAction extends ActionSupport implements ServletRequestAware, Se
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Map<String, Object> session;
+	protected String msg;
 	
 	public void setServletRequest(HttpServletRequest arg0) {
 		this.request = arg0;
@@ -52,7 +53,7 @@ public class BaseAction extends ActionSupport implements ServletRequestAware, Se
 	 * @param msg
 	 * @param response
 	 */
-	protected void printMsg(String msg, HttpServletResponse response) {
+	protected void printMsg(HttpServletResponse response) {
 		if(null == response) {
 			this.response.setContentType("application/json;charset=UTF-8");
 		}
@@ -67,18 +68,13 @@ public class BaseAction extends ActionSupport implements ServletRequestAware, Se
 			out.close();
 		}
 	}
-	
-	/**
-	 * 
-	 * 功能:给前台打印消息
-	 * 作者: jiangfuqiang
-	 * 创建日期:2013-6-22
-	 * 修改者: mender
-	 * 修改日期: modifydate
-	 * @param msg
-	 */
-	protected void printMsg(String msg) {
-		printMsg(msg, null);
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 }

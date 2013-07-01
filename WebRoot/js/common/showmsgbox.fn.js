@@ -61,7 +61,6 @@
 		
 		msgbox: function(setting,isCancel, isSure) {   //弹出框
 
-			var isIE = window.document.all?true:false;
 			var seriId = new Date().getTime();
 			var winWidth = de.clientWidth;
 			var winHeight = de.clientHeight;

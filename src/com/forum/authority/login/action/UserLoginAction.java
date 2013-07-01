@@ -10,13 +10,16 @@ public class UserLoginAction extends BaseAction {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	private String username;
+	private String password;
 	public String login() {
 		try {
-			log.info("login>>>>>>>>>>>>>>" +  EncryptAndDencrypt.encryptData("蒋富强") + ", " + EncryptAndDencrypt.verifyData(EncryptAndDencrypt.encryptData("蒋富强"), "蒋富强1"));
+			log.info("login>>>>>>>>>>>>>>" + username + ", " + password);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		msg = "{'msg':'1'}";
+		printMsg(null);
 		return null;
 	}
 	
@@ -28,6 +31,22 @@ public class UserLoginAction extends BaseAction {
 
 	public void setLoginService(UserLoginService loginService) {
 		this.loginService = loginService;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

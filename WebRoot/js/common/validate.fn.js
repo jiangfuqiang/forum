@@ -5,12 +5,13 @@
  * @param {Object} $
  */
 (function($){
-	
+	var expression = {
+		chinese: /[\u4E00-\u9FA5]/g,
+		url: ''
+	};
 	var setting = {
-		type: '',   //验证类型
+		type: '',   //验证类型,url, email,number,chinese
 		value: '',  //验证的值
-		msg: '',   //提示信息
-		title: '',   //提示标题
 		maxValue: '',   //最大值 
 		minValue: '',   //最小值
 		isDecimal: false,    //保留位数,
@@ -24,7 +25,17 @@
 			
 			var exclude = setting.exclude(setting.value);
 			if(exclude) {
-				
+				var type = setting.type;
+			
+				if(type == 'url') {
+					return methods['validateUrl'].call(this, setting.value);
+				} else if(type == 'email') {
+					
+				} else if(type == 'number') {
+					return methods['validateNumber'].call(this, setting.value, setting.maxValue, setting.minValue, setting.isDecimal, setting.isNegative);
+				} else if(type == 'chinese') {
+					return methods['validateChinese'].call(this, setting.value);
+				}
 			} else {
 				return true;
 			}
@@ -39,11 +50,14 @@
 			
 		},
 		validateChinese: function(value) {
-			
+			if(expression.chinese.test(value)) {
+				return true;
+			}
+			return false;
 		}
 	};
 	
-	$.fn.validate = function(options) {
+	$.validate = function(options) {
 		return methods['validateData'].call(this, options);
 	}
 	
