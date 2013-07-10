@@ -20,6 +20,10 @@ public class UserLoginServiceImpl implements UserLoginService {
 		
 		return null;
 	}
+
+	public String getPassword(String userId) {
+		return loginDao.getPassword(userId);
+	}
 	
 	
 }

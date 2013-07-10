@@ -56,10 +56,10 @@ public class EncryptAndDencrypt {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean verifyData(String data, String content) throws Exception {
+	public static boolean verifyData(String data, String encryptedData) throws Exception {
 		sign.initVerify((PublicKey) CacheData.KEY_CACHE.get("pubkey"));
-		byte[] buff = Base64.decode(data.getBytes());
-		sign.update(content.getBytes());
+		byte[] buff = data.getBytes();
+		sign.update(Base64.decode(encryptedData.getBytes()));
 		return sign.verify(buff);
 	}
 	
@@ -73,9 +73,9 @@ public class EncryptAndDencrypt {
 	 * @param data
 	 * @return
 	 */
-	public static String dencryptData(String data, String content) throws Exception{
+	public static String dencryptData(String target, String content) throws Exception{
 		sign.initVerify((PublicKey) CacheData.KEY_CACHE.get("pubkey"));
-		byte[] buff = Base64.decode(data.getBytes());
+		byte[] buff = Base64.decode(target.getBytes());
 		sign.update(content.getBytes());
 		return String.valueOf(sign.sign());
 	}

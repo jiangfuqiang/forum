@@ -38,64 +38,96 @@
 	</style>
 	<%@include file="/jsp/common/common.jsp" %>
 	<script type="text/javascript">
-		$(function(){
-			$("#login_img").click(function(){
-				var src = $(this).attr("src");
-				$("#loginloading_img").show();
-				var username = $("#username").val();
-				if(!username) {
-					$.showmsg({'msg':'用户名不能为空'});
-					$("#loginloading_img").hide();
-					return;
-				}
-				if($.validate({type:'chinese',value:username})) {
-					$.showmsg({'title':'错误提示', 'msg':'用户名不能为汉字'});
-					$("#loginloading_img").hide();
-					return;
-				}
-				var password = $("#password").val();
-				if(!password) {
-					$.showmsg({'msg':'密码不能为空'});
-					$("#loginloading_img").hide();
-					return;
-				}
-				$.ajax({
-					url: basePath + 'login/login.action',
-					dataType: 'json',
-					data: {username:username, password:password},
-					success: function(json) {
-						alert(json.msg);
-					},
-					error: function(){
-						$.showmsg({'msg':'登陆失败，请检查用户名或者密码输入是否正确'});
-						$("#loginloading_img").hide();
-					}
-				});
-				//$("#loginloading_img").hide();
+		Ext.onReady(function(){
+			var username = new Ext.form.TextField({
+				allowBlank:false,
+				margin:'15 0 15 0',
+				height:30,
+				fieldLabel:'用户名',
+				blankText: '用户名不能为空',
+				name: 'username',
+				id: 'username'
 			});
+			var password = new Ext.form.Text({
+				inputType: 'password',
+				height:30,
+				allowBlank: false,
+				fieldLabel: '密码',
+				maxLength: 10,
+				blankText: '密码不能为空',
+				name: 'password',
+				id: 'password'
+			});
+			
+			var loginButton = new Ext.Button({
+				text: '登陆',
+				handler: save
+			});
+			
+			var form = new Ext.form.FormPanel({
+				id: 'login_form',
+				shadow: true,
+				border: true,
+				frame: true,
+				labelAlign: 'right',
+				labelWidth: 50,
+				height:150,
+				labelPad:0,
+				buttonAlign: 'center',
+				buttons: [loginButton],
+				defaults: {
+					width:300,
+					autoWidth:true
+				},
+				keys: [
+						{key: Ext.EventObject.ENTER,
+						fn: save,
+						scope:this
+						}
+					],
+					
+				items: [
+						username, password
+					]
+			});
+			
+			var win = new Ext.Window({
+				layout:'column',
+				title:'用户登陆',
+				id:'win',
+				align:'center',
+				width:325,
+				height:182,
+				resizable:false,
+				draggable:false,
+				maximizable: false,
+				closeAction:'close',
+				closable:false,
+				frame: false,
+				border: true,
+				items:[form]
+			});
+			win.show();
+			
+			function save() {
+				var uname = username.getValue();
+				var pass = password.getValue();
+				Ext.Ajax.request({
+					url: basePath + 'login/login.action',
+					params: {username:uname, password:pass},
+					scope: this,
+					success: function(response) {
+						//var json = Ext.util.JSON.decode(response.responseText);
+						alert(response.responseText);
+					}
+				});	
+			}
 		});
+		
 	</script>
   </head>
   
   <body>
-    <div>
-    	<table>
-    		
-    		<tr>
-    			<td>用户名:</td>
-    			<td><input type="text" name="username" id="username"/></td>
-    			<td rowspan="2">
-    				<div class="img_div">
-    					<div><img src="<%=basePath %>images/common/login.png" id="login_img"/></div>
-    					<div id="loading_div"><img width="73" height="73" src="<%=basePath %>images/common/loginloading.gif" id="loginloading_img"/></div>
-    				</div>
-    			</td>
-    		</tr>
-    		<tr>
-    			<td>密码:</td>
-    			<td><input type="password" name="password" id="password"/></td>
-    		</tr>
-    	</table>
-    </div>
+    
   </body>
 </html>

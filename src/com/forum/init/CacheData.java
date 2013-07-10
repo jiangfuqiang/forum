@@ -150,7 +150,7 @@ public class CacheData {
 						if(JDBC_CACHE.containsKey(node.getNodeValue())) {
 							throw new InitSystemException("已经有【"+node.getNodeValue()+"】存在了");
 						}
-						JDBC_CACHE.put(node.getNodeValue(), node.getTextContent());
+						JDBC_CACHE.put(node.getAttributes().getNamedItem("name").getNodeValue(), node.getTextContent());
 					}
 				}
 			}

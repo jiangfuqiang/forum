@@ -24,9 +24,9 @@ public class BaseAction extends ActionSupport implements ServletRequestAware, Se
 	
 	protected Logger log = Logger.getLogger(BaseAction.class);
 	
-	private HttpServletRequest request;
-	private HttpServletResponse response;
-	private Map<String, Object> session;
+	protected HttpServletRequest request;
+	protected HttpServletResponse response;
+	protected Map<String, Object> session;
 	protected String msg;
 	
 	public void setServletRequest(HttpServletRequest arg0) {
@@ -53,28 +53,24 @@ public class BaseAction extends ActionSupport implements ServletRequestAware, Se
 	 * @param msg
 	 * @param response
 	 */
-	protected void printMsg(HttpServletResponse response) {
-		if(null == response) {
-			this.response.setContentType("application/json;charset=UTF-8");
+	protected void printMsg(HttpServletResponse respon) {
+		if(null == respon) {
+			response.setContentType("application/json");
+		} else {
+			response = respon;
 		}
+		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
 		} catch(IOException io) {
-			
+			LOG.info("输出返回值出错");
+			io.printStackTrace();
 		} finally {
-			out.print(msg);
+			out.write(msg);
 			out.flush();
 			out.close();
 		}
 	}
 
-	public String getMsg() {
-		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-	
 }

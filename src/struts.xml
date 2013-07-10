@@ -5,6 +5,7 @@
 <struts>
 	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
 	<constant name="struts.custom.i18n.resources" value="applicationErrorMsg"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant> 
 	<include file="com/forum/**/config/struts-*.xml"></include>
 	<package name="common" extends="struts-default">
 		<interceptors>

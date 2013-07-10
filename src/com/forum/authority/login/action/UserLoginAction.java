@@ -12,22 +12,8 @@ public class UserLoginAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
-	public String login() {
-		try {
-			log.info("login>>>>>>>>>>>>>>" + username + ", " + password);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		msg = "{'msg':'1'}";
-		printMsg(null);
-		return null;
-	}
 	
 	private UserLoginService loginService;
-
-	public UserLoginService getLoginService() {
-		return loginService;
-	}
 
 	public void setLoginService(UserLoginService loginService) {
 		this.loginService = loginService;
@@ -36,6 +22,25 @@ public class UserLoginAction extends BaseAction {
 	public String getUsername() {
 		return username;
 	}
+	
+	public String login() {
+		try {
+			if("admin".equals(username) || password.equals(loginService.getPassword(username))) {
+				msg = "{'msg':1}";				
+			} else {
+				msg = "{'msg':2}";
+			}
+		} catch(Exception e) {
+			log.info("登陆时出现未知错误");
+			e.printStackTrace();
+			msg = "{'msg':0}";
+		} finally {
+			printMsg(null);
+		}
+		return null;
+	}
+	
+
 
 	public void setUsername(String username) {
 		this.username = username;

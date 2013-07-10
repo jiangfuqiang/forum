@@ -5,9 +5,7 @@
 	
 <struts>
 	<package name="login" namespace="/login" extends="struts-default" >
-		<action name="login" class="com.forum.authority.login.action.UserLoginAction" method="login"></action>
 		<action name="*" class="com.forum.authority.login.action.UserLoginAction" method="{1}">
-			
 		</action>
 	</package>
 </struts>
